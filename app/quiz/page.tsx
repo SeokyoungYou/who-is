@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ import {
 import { CorrectAnswer } from "@/lib/quiz/type";
 import { useQuiz } from "@/hooks/useQuiz";
 
-export default function QuizPage() {
+function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const router = useRouter();
@@ -111,5 +111,13 @@ export default function QuizPage() {
         </Popover>
       </CardFooter>
     </Card>
+  );
+}
+
+export default function QuizPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Quiz />
+    </Suspense>
   );
 }
