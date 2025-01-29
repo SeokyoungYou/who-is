@@ -38,6 +38,8 @@ import {
   updateQuestionResults,
 } from "@/lib/result";
 import { calculateScore } from "@/lib/result";
+import { LeaderBoardEntry } from "@/lib/leaderBoard";
+import { addLeaderboardEntry } from "@/firebase/firestore/leaderboard";
 
 function Quiz() {
   const { quiz, questions, quizLength, quizType, questionCorrectAnswer } =
@@ -94,10 +96,19 @@ function Quiz() {
     setShowModal(true);
   };
 
-  const submitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const entry: LeaderBoardEntry = {
+      name: username,
+      score: quizResult.score,
+    };
 
-    router.push(`/results?type=${quizType}&score=${quizResult.score}`);
+    try {
+      await addLeaderboardEntry({ quizType, entry });
+      router.push(`/results?type=${quizType}&score=${quizResult.score}`);
+    } catch (error) {
+      alert(`Error adding leaderboard entry: ${JSON.stringify(error)}`);
+    }
   };
 
   const progress = ((currentQuestion + 1) / quizLength) * 100;

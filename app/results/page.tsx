@@ -18,25 +18,29 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Trophy, Medal, RefreshCw, Home } from "lucide-react";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useResults } from "@/hooks/useResults";
-
-const leaderboard = [
-  { name: "Alice", score: 9 },
-  { name: "Bob", score: 8 },
-  { name: "Charlie", score: 7 },
-  { name: "David", score: 6 },
-  { name: "Eve", score: 5 },
-];
+import { LeaderBoardEntry } from "@/lib/leaderBoard";
+import { getLeaderboard } from "@/firebase/firestore/leaderboard";
 
 function Results() {
+  const [leaderboard, setLeaderboard] = useState<LeaderBoardEntry[]>([]);
   const { quizLength, quizType } = useQuiz();
 
   const { quizResults } = useResults();
   const quizResult = quizResults[quizType];
   const score = quizResult.score;
+
   const userRank = leaderboard.findIndex((entry) => score > entry.score) + 1;
+
+  useEffect(() => {
+    getLeaderboard({ quizType }).then((leaderboard) => {
+      if (leaderboard) {
+        setLeaderboard(leaderboard);
+      }
+    });
+  }, [quizType]);
 
   return (
     <>
@@ -46,51 +50,59 @@ function Results() {
             Quiz Results
           </CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col items-center space-y-6">
-          <div className="text-center">
-            <p className="text-xl mb-2">Your Score:</p>
-            <p className="text-4xl font-bold text-blue-600">
-              {score} / {quizLength}
-            </p>
-            <p className="text-lg mt-2">Rank: {userRank}</p>
-          </div>
-          <div className="w-full">
-            <h3 className="text-xl font-semibold mb-2">Leaderboard</h3>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Rank</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead className="text-right">Score</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {leaderboard.map((entry, index) => (
-                  <TableRow
-                    key={index}
-                    className={score > entry.score ? "bg-green-100" : ""}
-                  >
-                    <TableCell className="font-medium">
-                      <div className="flex items-center space-x-2">
-                        {getMedalIcon(index + 1)}
-                        <span>{index + 1}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>{entry.name}</TableCell>
-                    <TableCell className="text-right">{entry.score}</TableCell>
+        {leaderboard.length !== 0 ? (
+          <CardContent className="flex flex-col items-center space-y-6">
+            <div className="text-center">
+              <p className="text-xl mb-2">Your Score:</p>
+              <p className="text-4xl font-bold text-blue-600">
+                {score} / {quizLength}
+              </p>
+              <p className="text-lg mt-2">Rank: {userRank}</p>
+            </div>
+            <div className="w-full">
+              <h3 className="text-xl font-semibold mb-2">Leaderboard</h3>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Rank</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead className="text-right">Score</TableHead>
                   </TableRow>
-                ))}
-                {userRank > leaderboard.length && (
-                  <TableRow className="bg-green-100">
-                    <TableCell className="font-medium">{userRank}</TableCell>
-                    <TableCell>You</TableCell>
-                    <TableCell className="text-right">{score}</TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
+                </TableHeader>
+                <TableBody>
+                  {leaderboard.map((entry, index) => (
+                    <TableRow
+                      key={index}
+                      className={score > entry.score ? "bg-green-100" : ""}
+                    >
+                      <TableCell className="font-medium">
+                        <div className="flex items-center space-x-2">
+                          {getMedalIcon(index + 1)}
+                          <span>{index + 1}</span>
+                        </div>
+                      </TableCell>
+                      <TableCell>{entry.name}</TableCell>
+                      <TableCell className="text-right">
+                        {entry.score}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {userRank > leaderboard.length && (
+                    <TableRow className="bg-green-100">
+                      <TableCell className="font-medium">{userRank}</TableCell>
+                      <TableCell>You</TableCell>
+                      <TableCell className="text-right">{score}</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        ) : (
+          <CardContent className="flex flex-col items-center space-y-6">
+            <p>Loading leaderboard...</p>
+          </CardContent>
+        )}
         <CardFooter className="flex justify-center space-x-4">
           <Link href="/">
             <Button variant="outline">
