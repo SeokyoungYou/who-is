@@ -2,21 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Play } from "lucide-react";
 import { auth } from "@/lib/firebase";
 import { signInAnonymously } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { QuizType } from "@/lib/quiz/type";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function WelcomeScreen() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleStartQuiz = async () => {
+  const handleStartQuiz = async (quizType: QuizType) => {
     setIsLoading(true);
     try {
       await signInAnonymously(auth);
-      router.push("/quiz");
+      router.push(`/quiz?type=${quizType}`);
     } catch (error) {
       console.error("Anonymous sign-in error:", error);
     } finally {
@@ -35,16 +36,52 @@ export default function WelcomeScreen() {
         <p className="text-center mb-6">
           Test your ability to identify Quartz in this exciting photo quiz!
         </p>
-        <Button size="lg" onClick={handleStartQuiz} disabled={isLoading}>
-          {isLoading ? (
-            "Loading..."
-          ) : (
-            <>
-              <Play className="mr-2 h-4 w-4" />
-              Start Quiz
-            </>
-          )}
-        </Button>
+
+        {!isLoading && (
+          <div className="grid  gap-4 mb-6 w-full">
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => handleStartQuiz(QuizType.EASY)}
+              disabled={isLoading}
+            >
+              {QuizType.EASY}
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => handleStartQuiz(QuizType.NORMAL)}
+              disabled={isLoading}
+            >
+              {QuizType.NORMAL}
+            </Button>
+            <Button
+              variant="default"
+              size="lg"
+              onClick={() => handleStartQuiz(QuizType.HARD)}
+              disabled={isLoading}
+            >
+              {QuizType.HARD}
+            </Button>
+            <Button
+              variant="destructive"
+              size="lg"
+              onClick={() => handleStartQuiz(QuizType.SUPER_HARD)}
+              disabled={isLoading}
+            >
+              {QuizType.SUPER_HARD}
+            </Button>
+          </div>
+        )}
+
+        {isLoading && (
+          <div className="flex flex-col items-center gap-2">
+            <Spinner size="medium" />
+            <p className="text-center text-sm text-muted-foreground">
+              Loading...
+            </p>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

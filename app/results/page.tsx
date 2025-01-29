@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/table";
 import { Trophy, Medal, RefreshCw, Home } from "lucide-react";
 import { Suspense } from "react";
-
+import { useQuiz } from "@/hooks/useQuiz";
 const leaderboard = [
   { name: "Alice", score: 9 },
   { name: "Bob", score: 8 },
@@ -30,8 +30,7 @@ const leaderboard = [
 ];
 
 function Results() {
-  const searchParams = useSearchParams();
-  const score = Number.parseInt(searchParams.get("score") || "0", 10);
+  const { score, quizType } = useQuiz();
   const userRank = leaderboard.findIndex((entry) => score > entry.score) + 1;
 
   const getMedalIcon = (rank: number) => {
@@ -106,7 +105,7 @@ function Results() {
               <Home className="mr-2 h-4 w-4" /> Back to Home
             </Button>
           </Link>
-          <Link href="/quiz">
+          <Link href={`/quiz?type=${quizType}`}>
             <Button>
               <RefreshCw className="mr-2 h-4 w-4" /> Play Again
             </Button>

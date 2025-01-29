@@ -1,17 +1,18 @@
-import "@/app/globals.css"
-import { Inter } from "next/font/google"
+import "@/app/globals.css";
+import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Who is Quartz? Quiz",
-  description: "Test your ability to identify Quartz in this exciting photo quiz!",
-}
+  title: "Who is Quartz?",
+  description:
+    "Test your ability to identify Quartz in this exciting photo quiz!",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -21,6 +22,5 @@ export default function RootLayout({
         </main>
       </body>
     </html>
-  )
+  );
 }
-
