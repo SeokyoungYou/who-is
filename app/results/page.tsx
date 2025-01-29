@@ -22,11 +22,14 @@ import { Suspense, useEffect, useState } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useResults } from "@/hooks/useResults";
 import { LeaderBoardEntry } from "@/lib/leaderBoard";
-import { getLeaderboard } from "@/firebase/firestore/leaderboard";
+import {
+  getLeaderboard,
+  MAX_LEADERBOARD_ENTRIES,
+} from "@/firebase/firestore/leaderboard";
 
 function Results() {
   const [leaderboard, setLeaderboard] = useState<LeaderBoardEntry[]>([]);
-  const { quizLength, quizType } = useQuiz();
+  const { quizLength, quizType, quiz } = useQuiz();
 
   const { quizResults } = useResults();
   const quizResult = quizResults[quizType];
@@ -47,7 +50,7 @@ function Results() {
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
-            Quiz Results
+            {quiz.title} - TOP {MAX_LEADERBOARD_ENTRIES}
           </CardTitle>
         </CardHeader>
         {leaderboard.length !== 0 ? (
