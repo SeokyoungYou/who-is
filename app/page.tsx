@@ -45,7 +45,7 @@ export default function WelcomeScreen() {
               onClick={() => handleStartQuiz(QuizType.EASY)}
               disabled={isLoading}
             >
-              {QuizType.EASY}
+              Easy
             </Button>
             <Button
               variant="secondary"
@@ -53,7 +53,7 @@ export default function WelcomeScreen() {
               onClick={() => handleStartQuiz(QuizType.NORMAL)}
               disabled={isLoading}
             >
-              {QuizType.NORMAL}
+              Normal
             </Button>
             <Button
               variant="default"
@@ -61,7 +61,7 @@ export default function WelcomeScreen() {
               onClick={() => handleStartQuiz(QuizType.HARD)}
               disabled={isLoading}
             >
-              {QuizType.HARD}
+              Hard
             </Button>
             <Button
               variant="destructive"
@@ -69,7 +69,7 @@ export default function WelcomeScreen() {
               onClick={() => handleStartQuiz(QuizType.SUPER_HARD)}
               disabled={isLoading}
             >
-              {QuizType.SUPER_HARD}
+              Super Hard
             </Button>
           </div>
         )}
