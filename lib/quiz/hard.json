@@ -1,0 +1,75 @@
+{
+  "title": "Hard",
+  "questions": [
+    {
+      "id": "birthday",
+      "title": "Birthday",
+      "leftImage": "/images/birthday-1.png",
+      "rightImage": "/images/birthday-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "honor-horse-owner",
+      "title": "Honor vs Horse Owner",
+      "leftImage": "/images/honor-horse-owner-1.png",
+      "rightImage": "/images/honor-horse-owner-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "green-blue",
+      "title": "Green vs Blue",
+      "leftImage": "/images/green-blue-1.png",
+      "rightImage": "/images/green-blue-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "happy",
+      "title": "Happy",
+      "leftImage": "/images/happy-1.png",
+      "rightImage": "/images/happy-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "mountain",
+      "title": "Mountain",
+      "leftImage": "/images/mountain-1.png",
+      "rightImage": "/images/mountain-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "orange",
+      "title": "Orange",
+      "leftImage": "/images/orange-1.png",
+      "rightImage": "/images/orange-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "singer",
+      "title": "Singer",
+      "leftImage": "/images/singer-1.png",
+      "rightImage": "/images/singer-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "spider-twins",
+      "title": "Spider Twins",
+      "leftImage": "/images/spider-twins-1.png",
+      "rightImage": "/images/spider-twins-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "white",
+      "title": "White",
+      "leftImage": "/images/white-1.png",
+      "rightImage": "/images/white-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "in-la",
+      "title": "In LA",
+      "leftImage": "/images/in-la-1.png",
+      "rightImage": "/images/in-la-2.png",
+      "correctAnswer": "right"
+    }
+  ]
+}

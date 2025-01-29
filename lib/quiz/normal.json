@@ -1,0 +1,77 @@
+{
+  "title": "Normal",
+  "questions": [
+    {
+      "id": "wine",
+      "title": "Wine",
+      "leftImage": "/images/wine-1.png",
+      "rightImage": "/images/wine-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "at-sea",
+      "title": "At Sea",
+      "leftImage": "/images/at-sea-1.png",
+      "rightImage": "/images/at-sea-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "hide-and-seek",
+      "title": "Hide and Seek",
+      "leftImage": "/images/hide-and-seek-1.png",
+      "rightImage": "/images/hide-and-seek-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "nervous-twins",
+      "title": "Nervous Twins",
+      "leftImage": "/images/nervous-twins-1.png",
+      "rightImage": "/images/nervous-twins-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "bjj-sparring",
+      "title": "BJJ Sparring",
+      "leftImage": "/images/bjj-sparring-1.png",
+      "rightImage": "/images/bjj-sparring-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "outsider-insider",
+      "title": "Outsider vs Insider",
+      "leftImage": "/images/outsider-insider-1.png",
+      "rightImage": "/images/outsider-insider-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "pucca",
+      "title": "Pucca",
+      "leftImage": "/images/pucca-1.png",
+      "rightImage": "/images/pucca-2.png",
+      "correctAnswer": "left"
+    },
+
+    {
+      "id": "recliner",
+      "title": "Recliner",
+      "leftImage": "/images/recliner-1.png",
+      "rightImage": "/images/recliner-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "red-devils",
+      "title": "Red Devils",
+      "leftImage": "/images/red-devils-1.png",
+      "rightImage": "/images/red-devils-2.png",
+      "correctAnswer": "left"
+    },
+
+    {
+      "id": "hanbok",
+      "title": "Hanbok",
+      "leftImage": "/images/hanbok-1.png",
+      "rightImage": "/images/hanbok-2.png",
+      "correctAnswer": "right"
+    }
+  ]
+}

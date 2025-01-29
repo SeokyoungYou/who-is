@@ -1,12 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const quizData = [
   {
@@ -28,31 +34,33 @@ const quizData = [
     correctAnswer: "left",
   },
   // Add more quiz questions here
-]
+];
 
 export default function QuizPage() {
-  const [currentQuestion, setCurrentQuestion] = useState(0)
-  const [score, setScore] = useState(0)
-  const router = useRouter()
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const router = useRouter();
 
   const handleAnswer = (selectedOption: "left" | "right") => {
     if (selectedOption === quizData[currentQuestion].correctAnswer) {
-      setScore(score + 1)
+      setScore(score + 1);
     }
 
     if (currentQuestion + 1 < quizData.length) {
-      setCurrentQuestion(currentQuestion + 1)
+      setCurrentQuestion(currentQuestion + 1);
     } else {
-      router.push(`/results?score=${score + 1}`)
+      router.push(`/results?score=${score + 1}`);
     }
-  }
+  };
 
-  const progress = ((currentQuestion + 1) / quizData.length) * 100
+  const progress = ((currentQuestion + 1) / quizData.length) * 100;
 
   return (
     <Card className="w-full max-w-2xl">
       <CardHeader>
-        <CardTitle className="text-xl font-bold text-center">Who is Quartz?</CardTitle>
+        <CardTitle className="text-xl font-bold text-center">
+          Who is Quartz?
+        </CardTitle>
         <p className="text-center text-sm text-muted-foreground">
           Question {currentQuestion + 1} of {quizData.length}
         </p>
@@ -93,9 +101,10 @@ export default function QuizPage() {
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <p className="text-sm text-muted-foreground">Click on the button below the image to select Quartz</p>
+        <p className="text-sm text-muted-foreground">
+          Click on the button below the image to select Quartz
+        </p>
       </CardFooter>
     </Card>
-  )
+  );
 }
-

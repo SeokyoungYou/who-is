@@ -1,0 +1,78 @@
+{
+  "title": "Easy",
+  "questions": [
+    {
+      "id": "tabom-v",
+      "title": "Tabom vs V",
+      "leftImage": "/images/tabom-v-1.png",
+      "rightImage": "/images/tabom-v-2.png",
+      "correctAnswer": "right"
+    },
+
+    {
+      "id": "bjj",
+      "title": "BJJ",
+      "leftImage": "/images/bjj-1.png",
+      "rightImage": "/images/bjj-2.png",
+      "correctAnswer": "left"
+    },
+
+    {
+      "id": "forehead",
+      "title": "Forehead",
+      "leftImage": "/images/forehead-1.png",
+      "rightImage": "/images/forehead-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "in-hanoi",
+      "title": "In Hanoi",
+      "leftImage": "/images/in-hanoi-1.png",
+      "rightImage": "/images/in-hanoi-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "sunglasses",
+      "title": "Blue Twins",
+      "leftImage": "/images/blue-twins-1.png",
+      "rightImage": "/images/blue-twins-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "ballcap",
+      "title": "Ballcap",
+      "leftImage": "/images/ballcap-1.png",
+      "rightImage": "/images/ballcap-2.png",
+      "correctAnswer": "left"
+    },
+
+    {
+      "id": "pink-skyblue",
+      "title": "Pink vs Skyblue",
+      "leftImage": "/images/pink-skyblue-1.png",
+      "rightImage": "/images/pink-skyblue-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "bjj-back-position",
+      "title": "BJJ Back Position",
+      "leftImage": "/images/bjj-back-position-1.png",
+      "rightImage": "/images/bjj-back-position-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "puffer-jacket",
+      "title": "Puffer Jacket",
+      "leftImage": "/images/puffer-jacket-1.png",
+      "rightImage": "/images/puffer-jacket-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "jeans",
+      "title": "Jeans",
+      "leftImage": "/images/jeans-1.png",
+      "rightImage": "/images/jeans-2.png",
+      "correctAnswer": "left"
+    }
+  ]
+}

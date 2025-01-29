@@ -1,0 +1,78 @@
+{
+  "title": "Super Hard",
+  "questions": [
+    {
+      "id": "swing",
+      "title": "Swing",
+      "leftImage": "/images/swing-1.png",
+      "rightImage": "/images/swing-2.png",
+      "correctAnswer": "right"
+    },
+
+    {
+      "id": "blue-twins",
+      "title": "Blue Twins",
+      "leftImage": "/images/blue-twins-1.png",
+      "rightImage": "/images/blue-twins-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "in-jeju",
+      "title": "In Jeju",
+      "leftImage": "/images/in-jeju-1.png",
+      "rightImage": "/images/in-jeju-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "in-the-balls",
+      "title": "In The Balls",
+      "leftImage": "/images/in-the-balls-1.png",
+      "rightImage": "/images/in-the-balls-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "nhatrang",
+      "title": "Nhatrang",
+      "leftImage": "/images/nhatrang-1.png",
+      "rightImage": "/images/nhatrang-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "on-the-stage",
+      "title": "On The Stage",
+      "leftImage": "/images/on-the-stage-1.png",
+      "rightImage": "/images/on-the-stage-2.png",
+      "correctAnswer": "right"
+    },
+
+    {
+      "id": "santa-twins",
+      "title": "Santa Twins",
+      "leftImage": "/images/santa-twins-1.png",
+      "rightImage": "/images/santa-twins-2.png",
+      "correctAnswer": "left"
+    },
+
+    {
+      "id": "the-shining",
+      "title": "The Shining",
+      "leftImage": "/images/the-shining-1.png",
+      "rightImage": "/images/the-shining-2.png",
+      "correctAnswer": "left"
+    },
+    {
+      "id": "trampoline",
+      "title": "Trampoline",
+      "leftImage": "/images/trampoline-1.png",
+      "rightImage": "/images/trampoline-2.png",
+      "correctAnswer": "right"
+    },
+    {
+      "id": "poem",
+      "title": "Poem",
+      "leftImage": "/images/poem-1.png",
+      "rightImage": "/images/poem-2.png",
+      "correctAnswer": "right"
+    }
+  ]
+}
