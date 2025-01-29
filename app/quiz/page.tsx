@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Info } from "lucide-react";
+import { ChevronLeft, Info } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -107,10 +107,10 @@ function Quiz() {
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle className="text-xl font-bold text-center">
-            {questions[currentQuestion].title}
+            {quiz.title}
           </CardTitle>
           <p className="text-center text-sm text-muted-foreground">
-            {quiz.title}{" "}
+            💎 Find Quartz!
           </p>
           <p className="text-center text-sm text-muted-foreground">
             Question {currentQuestion + 1} of {quizLength}
@@ -118,9 +118,7 @@ function Quiz() {
           <Progress value={progress} className="w-full" />
         </CardHeader>
         <CardContent className="flex flex-col items-center space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Click on the button below the image to select Quartz
-          </p>
+          <p className="text-sm">{questions[currentQuestion].title}</p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <div className="relative p-2 bg-red-100/90 backdrop-blur-sm rounded-lg shadow-lg">
               <ImagePreview
@@ -154,7 +152,17 @@ function Quiz() {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col items-center space-y-0.5">
+        <CardFooter className="flex flex-col items-center space-y-12">
+          <div className="flex self-center items-center space-x-4">
+            <Button
+              variant="ghost"
+              onClick={() => setCurrentQuestion(currentQuestion - 1)}
+              disabled={currentQuestion === 0}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Prev
+            </Button>
+          </div>
           <Popover>
             <PopoverTrigger asChild>
               <Button
