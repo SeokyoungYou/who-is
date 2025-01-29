@@ -64,7 +64,7 @@ function Quiz() {
               src={questions[currentQuestion].leftImage}
               alt="Left Person"
               width={300}
-              height={400}
+              height={300}
               className="rounded-lg"
             />
             <Button
@@ -79,7 +79,7 @@ function Quiz() {
               src={questions[currentQuestion].rightImage}
               alt="Right Person"
               width={300}
-              height={400}
+              height={300}
               className="rounded-lg"
             />
             <Button
