@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +20,7 @@ import {
 
 import { CorrectAnswer } from "@/lib/quiz/type";
 import { useQuiz } from "@/hooks/useQuiz";
+import ImagePreview from "@/components/ImagePreview";
 
 function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -60,7 +60,7 @@ function Quiz() {
       <CardContent className="flex flex-col items-center space-y-4">
         <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
           <div className="relative p-1 bg-violet-100/90 backdrop-blur-sm rounded-lg shadow-lg">
-            <Image
+            <ImagePreview
               src={questions[currentQuestion].leftImage}
               alt="Left Person"
               width={300}
@@ -75,7 +75,7 @@ function Quiz() {
             </Button>
           </div>
           <div className="relative p-1 bg-violet-100/90 backdrop-blur-sm rounded-lg shadow-lg">
-            <Image
+            <ImagePreview
               src={questions[currentQuestion].rightImage}
               alt="Right Person"
               width={300}
