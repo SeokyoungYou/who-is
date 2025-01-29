@@ -44,6 +44,7 @@ import { addLeaderboardEntry } from "@/firebase/firestore/leaderboard";
 function Quiz() {
   const { quiz, questions, quizLength, quizType, questionCorrectAnswer } =
     useQuiz();
+  const [isSubmitting, setIsSubmitted] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const router = useRouter();
   const [username, setUsername] = useLocalStorageState<string>(
@@ -98,6 +99,8 @@ function Quiz() {
 
   const submitAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitted(true);
     const entry: LeaderBoardEntry = {
       name: username,
       score: quizResult.score,
@@ -109,6 +112,7 @@ function Quiz() {
     } catch (error) {
       alert(`Error adding leaderboard entry: ${JSON.stringify(error)}`);
     }
+    setIsSubmitted(false);
   };
 
   const progress = ((currentQuestion + 1) / quizLength) * 100;
@@ -217,7 +221,7 @@ function Quiz() {
                 disabled={!username}
                 className="rounded-l-none shadow"
               >
-                Submit
+                {isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </form>
           </ResponsiveModalFooter>
