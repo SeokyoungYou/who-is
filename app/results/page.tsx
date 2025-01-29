@@ -20,6 +20,8 @@ import {
 import { Trophy, Medal, RefreshCw, Home } from "lucide-react";
 import { Suspense } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
+import { useResults } from "@/hooks/useResults";
+
 const leaderboard = [
   { name: "Alice", score: 9 },
   { name: "Bob", score: 8 },
@@ -29,21 +31,12 @@ const leaderboard = [
 ];
 
 function Results() {
-  const { score, quizType } = useQuiz();
-  const userRank = leaderboard.findIndex((entry) => score > entry.score) + 1;
+  const { quizLength, quizType } = useQuiz();
 
-  const getMedalIcon = (rank: number) => {
-    switch (rank) {
-      case 1:
-        return <Trophy className="h-6 w-6 text-yellow-400" />;
-      case 2:
-        return <Medal className="h-6 w-6 text-gray-400" />;
-      case 3:
-        return <Medal className="h-6 w-6 text-amber-600" />;
-      default:
-        return null;
-    }
-  };
+  const { quizResults } = useResults();
+  const quizResult = quizResults[quizType];
+  const score = quizResult.score;
+  const userRank = leaderboard.findIndex((entry) => score > entry.score) + 1;
 
   return (
     <>
@@ -57,7 +50,7 @@ function Results() {
           <div className="text-center">
             <p className="text-xl mb-2">Your Score:</p>
             <p className="text-4xl font-bold text-blue-600">
-              {score} / {leaderboard.length}
+              {score} / {quizLength}
             </p>
             <p className="text-lg mt-2">Rank: {userRank}</p>
           </div>
@@ -122,3 +115,16 @@ export default function ResultsPage() {
     </Suspense>
   );
 }
+
+const getMedalIcon = (rank: number) => {
+  switch (rank) {
+    case 1:
+      return <Trophy className="h-6 w-6 text-yellow-400" />;
+    case 2:
+      return <Medal className="h-6 w-6 text-gray-400" />;
+    case 3:
+      return <Medal className="h-6 w-6 text-amber-600" />;
+    default:
+      return null;
+  }
+};
