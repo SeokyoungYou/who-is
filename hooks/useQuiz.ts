@@ -1,6 +1,7 @@
-import { QuizType } from "@/lib/quiz/type";
+import { CorrectAnswer, QuizType } from "@/lib/quiz/type";
 
 import { quizzes } from "@/lib/quiz/type";
+import { QuestionResult } from "@/lib/result";
 import { useSearchParams } from "next/navigation";
 
 export const useQuiz = () => {
@@ -10,6 +11,19 @@ export const useQuiz = () => {
 
   const quiz = quizzes.find((quiz) => quiz.id === quizType) || quizzes[0];
   const questions = quiz?.questions;
+  const questionCorrectAnswer: QuestionResult[] = questions?.map((question) => {
+    return {
+      questionId: question.id,
+      answer: question.correctAnswer as CorrectAnswer,
+    };
+  });
 
-  return { quiz, questions, quizLength: questions?.length, quizType, score };
+  return {
+    quiz,
+    questions,
+    quizLength: questions?.length,
+    quizType,
+    score,
+    questionCorrectAnswer,
+  };
 };

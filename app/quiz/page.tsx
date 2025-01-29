@@ -32,11 +32,17 @@ import { useQuiz } from "@/hooks/useQuiz";
 import ImagePreview from "@/components/ImagePreview";
 import useLocalStorageState from "use-local-storage-state";
 import { LocalStorageKeys } from "@/lib/localStorage";
+import {
+  QuestionResult,
+  QuizResult,
+  updateQuestionResults,
+} from "@/lib/result";
+import { calculateScore } from "@/lib/result";
 
 function Quiz() {
-  const { quiz, questions, quizLength, quizType } = useQuiz();
+  const { quiz, questions, quizLength, quizType, questionCorrectAnswer } =
+    useQuiz();
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
   const router = useRouter();
   const [username, setUsername] = useLocalStorageState<string>(
     LocalStorageKeys.USERNAME,
@@ -44,16 +50,41 @@ function Quiz() {
       defaultValue: "",
     }
   );
+  const [quizResult, setQuizResult] = useLocalStorageState<QuizResult>(
+    quizType,
+    {
+      defaultValue: {
+        score: 0,
+        questionResults: [],
+        isDone: false,
+      },
+    }
+  );
   const [showModal, setShowModal] = useState(false);
 
   const handleAnswer = (selectedOption: CorrectAnswer) => {
-    const isCorrect =
-      selectedOption === questions[currentQuestion].correctAnswer;
-    if (isCorrect) {
-      setScore(score + 1);
-    }
+    const currentQuestionResult: QuestionResult = {
+      questionId: questions[currentQuestion].id,
+      answer: selectedOption,
+    };
+
+    const newQuestionResults = updateQuestionResults(
+      quizResult.questionResults,
+      currentQuestionResult
+    );
+
+    const newScore = calculateScore({
+      questionResults: newQuestionResults,
+      questionCorrectAnswer,
+    });
 
     const isLastQuestion = currentQuestion + 1 === quizLength;
+
+    setQuizResult({
+      score: newScore,
+      questionResults: newQuestionResults,
+      isDone: isLastQuestion,
+    });
 
     if (!isLastQuestion) {
       setCurrentQuestion(currentQuestion + 1);
@@ -63,8 +94,10 @@ function Quiz() {
     setShowModal(true);
   };
 
-  const submitAnswer = () => {
-    router.push(`/results?type=${quizType}&score=${score + 1}`);
+  const submitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    router.push(`/results?type=${quizType}&score=${quizResult.score}`);
   };
 
   const progress = ((currentQuestion + 1) / quizLength) * 100;
@@ -149,7 +182,10 @@ function Quiz() {
           </ResponsiveModalHeader>
 
           <ResponsiveModalFooter>
-            <div className="w-full max-w-xs flex items-center justify-center self-center pb-8">
+            <form
+              onSubmit={submitAnswer}
+              className="w-full max-w-xs flex items-center justify-center self-center pb-8"
+            >
               <Input
                 type="text"
                 value={username}
@@ -158,13 +194,13 @@ function Quiz() {
                 onChange={(e) => setUsername(e.target.value)}
               />
               <Button
-                onClick={submitAnswer}
+                type="submit"
                 disabled={!username}
                 className="rounded-l-none shadow"
               >
                 Submit
               </Button>
-            </div>
+            </form>
           </ResponsiveModalFooter>
         </ResponsiveModalContent>
       </ResponsiveModal>

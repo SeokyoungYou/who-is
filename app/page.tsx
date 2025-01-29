@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/firebase";
 import { signInAnonymously } from "firebase/auth";
@@ -8,18 +8,33 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { QuizType } from "@/lib/quiz/type";
 import { Spinner } from "@/components/ui/spinner";
+import { useResults } from "@/hooks/useResults";
+import { CheckIcon } from "lucide-react";
+
+const buttons = [
+  { label: "Easy", type: QuizType.EASY, variant: "secondary" },
+  { label: "Normal", type: QuizType.NORMAL, variant: "gray" },
+  { label: "Hard", type: QuizType.HARD, variant: "default" },
+  { label: "Super Hard", type: QuizType.SUPER_HARD, variant: "destructive" },
+];
 
 export default function WelcomeScreen() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { quizResults } = useResults();
 
   const handleStartQuiz = async (quizType: QuizType) => {
     setIsLoading(true);
     try {
       await signInAnonymously(auth);
-      router.push(`/quiz?type=${quizType}`);
+
+      if (quizResults[quizType].isDone) {
+        router.push(`/results?type=${quizType}`);
+      } else {
+        router.push(`/quiz?type=${quizType}`);
+      }
     } catch (error) {
-      console.error("Anonymous sign-in error:", error);
+      alert(`Anonymous sign-in error: ${JSON.stringify(error)}`);
     } finally {
       setIsLoading(false);
     }
@@ -38,39 +53,25 @@ export default function WelcomeScreen() {
         </p>
 
         {!isLoading && (
-          <div className="grid  gap-4 mb-6 w-full">
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => handleStartQuiz(QuizType.EASY)}
-              disabled={isLoading}
-            >
-              Easy
-            </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => handleStartQuiz(QuizType.NORMAL)}
-              disabled={isLoading}
-            >
-              Normal
-            </Button>
-            <Button
-              variant="default"
-              size="lg"
-              onClick={() => handleStartQuiz(QuizType.HARD)}
-              disabled={isLoading}
-            >
-              Hard
-            </Button>
-            <Button
-              variant="destructive"
-              size="lg"
-              onClick={() => handleStartQuiz(QuizType.SUPER_HARD)}
-              disabled={isLoading}
-            >
-              Super Hard
-            </Button>
+          <div className="grid gap-4 mb-6 w-full">
+            {buttons.map((button) => (
+              <div key={button.type} className="relative">
+                {quizResults[button.type].isDone && (
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-b from-purple-400 to-pink-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                    <CheckIcon className="h-3 w-3" strokeWidth={4} />
+                  </div>
+                )}
+                <Button
+                  variant={button.variant as ButtonProps["variant"]}
+                  size="lg"
+                  onClick={() => handleStartQuiz(button.type)}
+                  disabled={isLoading}
+                  className="w-full"
+                >
+                  {button.label}
+                </Button>
+              </div>
+            ))}
           </div>
         )}
 
