@@ -11,106 +11,165 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+  ResponsiveModalDescription,
+  ResponsiveModalFooter,
+} from "@/components/ui/responsive-modal";
+import { Input } from "@/components/ui/input";
 
 import { CorrectAnswer } from "@/lib/quiz/type";
 import { useQuiz } from "@/hooks/useQuiz";
 import ImagePreview from "@/components/ImagePreview";
+import useLocalStorageState from "use-local-storage-state";
+import { LocalStorageKeys } from "@/lib/localStorage";
 
 function Quiz() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const router = useRouter();
+  const [username, setUsername] = useLocalStorageState<string>(
+    LocalStorageKeys.USERNAME,
+    {
+      defaultValue: "",
+    }
+  );
+  const [showModal, setShowModal] = useState(false);
 
   const { quiz, questions, quizLength, quizType } = useQuiz();
 
   const handleAnswer = (selectedOption: CorrectAnswer) => {
-    if (selectedOption === questions[currentQuestion].correctAnswer) {
+    const isCorrect =
+      selectedOption === questions[currentQuestion].correctAnswer;
+    if (isCorrect) {
       setScore(score + 1);
     }
 
-    if (currentQuestion + 1 < quizLength) {
+    const isLastQuestion = currentQuestion + 1 === quizLength;
+
+    if (!isLastQuestion) {
       setCurrentQuestion(currentQuestion + 1);
-    } else {
-      router.push(`/results?type=${quizType}&score=${score + 1}`);
+      return;
     }
+
+    setShowModal(true);
+  };
+
+  const submitAnswer = () => {
+    router.push(`/results?type=${quizType}&score=${score + 1}`);
   };
 
   const progress = ((currentQuestion + 1) / quizLength) * 100;
 
   return (
-    <Card className="w-full max-w-2xl space-y-2">
-      <CardHeader>
-        <CardTitle className="text-xl font-bold text-center">
-          {quiz.title}
-        </CardTitle>
-        <p className="text-center text-sm text-muted-foreground">
-          {questions[currentQuestion].title}
-        </p>
-        <p className="text-center text-sm text-muted-foreground">
-          Question {currentQuestion + 1} of {quizLength}
-        </p>
-        <Progress value={progress} className="w-full" />
-      </CardHeader>
-      <CardContent className="flex flex-col items-center space-y-4">
-        <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-          <div className="relative p-1 bg-violet-100/90 backdrop-blur-sm rounded-lg shadow-lg">
-            <ImagePreview
-              src={questions[currentQuestion].leftImage}
-              alt="Left Person"
-              width={300}
-              height={300}
-              className="rounded-lg"
-            />
-            <Button
-              className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
-              onClick={() => handleAnswer(CorrectAnswer.LEFT)}
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" /> Select Left
-            </Button>
+    <>
+      <Card className="w-full max-w-2xl space-y-2">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold text-center">
+            {quiz.title}
+          </CardTitle>
+          <p className="text-center text-sm text-muted-foreground">
+            {questions[currentQuestion].title}
+          </p>
+          <p className="text-center text-sm text-muted-foreground">
+            Question {currentQuestion + 1} of {quizLength}
+          </p>
+          <Progress value={progress} className="w-full" />
+        </CardHeader>
+        <CardContent className="flex flex-col items-center space-y-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <div className="relative p-2 bg-red-100/90 backdrop-blur-sm rounded-lg shadow-lg">
+              <ImagePreview
+                src={questions[currentQuestion].leftImage}
+                alt="Left Person"
+                width={300}
+                height={300}
+                className="rounded-lg"
+              />
+              <Button
+                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-red-500/80 hover:bg-red-600/80 backdrop-blur-sm opacity-90"
+                onClick={() => handleAnswer(CorrectAnswer.LEFT)}
+              >
+                Select Red
+              </Button>
+            </div>
+            <div className="relative p-2 bg-blue-100/90 backdrop-blur-sm rounded-lg shadow-lg">
+              <ImagePreview
+                src={questions[currentQuestion].rightImage}
+                alt="Right Person"
+                width={300}
+                height={300}
+                className="rounded-lg"
+              />
+              <Button
+                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500/80 hover:bg-blue-600/80 backdrop-blur-sm opacity-90"
+                onClick={() => handleAnswer(CorrectAnswer.RIGHT)}
+              >
+                Select Blue
+              </Button>
+            </div>
           </div>
-          <div className="relative p-1 bg-violet-100/90 backdrop-blur-sm rounded-lg shadow-lg">
-            <ImagePreview
-              src={questions[currentQuestion].rightImage}
-              alt="Right Person"
-              width={300}
-              height={300}
-              className="rounded-lg"
-            />
-            <Button
-              className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
-              onClick={() => handleAnswer(CorrectAnswer.RIGHT)}
-            >
-              Select Right <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </CardContent>
-      <CardFooter className="flex flex-col items-center space-y-0.5">
-        <p className="text-sm text-muted-foreground">
-          Click on the button below the image to select Quartz
-        </p>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="link"
-              className="text-sm text-muted-foreground hover:text-primary"
-            >
-              <Info className="mr-2 h-4 w-4" />
-              Click here for a hint
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent side="top" className="w-48 text-center p-3">
-            The cuter one is Quartz! 🤩
-          </PopoverContent>
-        </Popover>
-      </CardFooter>
-    </Card>
+        </CardContent>
+        <CardFooter className="flex flex-col items-center space-y-0.5">
+          <p className="text-sm text-muted-foreground">
+            Click on the button below the image to select Quartz
+          </p>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="link"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
+                <Info className="mr-2 h-4 w-4" />
+                Click here for a hint
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent side="top" className="w-48 text-center p-3">
+              The cuter one is Quartz! 🤩
+            </PopoverContent>
+          </Popover>
+        </CardFooter>
+      </Card>
+
+      <ResponsiveModal open={showModal} onOpenChange={setShowModal}>
+        <ResponsiveModalContent className="space-y-6" side="top">
+          <ResponsiveModalHeader>
+            <ResponsiveModalTitle>🎉 Quiz Complete 🎉</ResponsiveModalTitle>
+            <ResponsiveModalDescription>
+              Congratulations! You have completed the quiz.
+            </ResponsiveModalDescription>
+          </ResponsiveModalHeader>
+
+          <ResponsiveModalFooter>
+            <div className="w-full max-w-xs flex items-center justify-center self-center pb-8">
+              <Input
+                type="text"
+                value={username}
+                placeholder="Enter your name"
+                className="rounded-r-none focus-visible:ring-0"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <Button
+                onClick={submitAnswer}
+                disabled={!username}
+                className="rounded-l-none shadow"
+              >
+                Submit
+              </Button>
+            </div>
+          </ResponsiveModalFooter>
+        </ResponsiveModalContent>
+      </ResponsiveModal>
+    </>
   );
 }
 
