@@ -34,6 +34,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { LocalStorageKeys } from "@/lib/localStorage";
 
 function Quiz() {
+  const { quiz, questions, quizLength, quizType } = useQuiz();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const router = useRouter();
@@ -44,8 +45,6 @@ function Quiz() {
     }
   );
   const [showModal, setShowModal] = useState(false);
-
-  const { quiz, questions, quizLength, quizType } = useQuiz();
 
   const handleAnswer = (selectedOption: CorrectAnswer) => {
     const isCorrect =
@@ -72,13 +71,13 @@ function Quiz() {
 
   return (
     <>
-      <Card className="w-full max-w-2xl space-y-2">
+      <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle className="text-xl font-bold text-center">
-            {quiz.title}
+            {questions[currentQuestion].title}
           </CardTitle>
           <p className="text-center text-sm text-muted-foreground">
-            {questions[currentQuestion].title}
+            {quiz.title}{" "}
           </p>
           <p className="text-center text-sm text-muted-foreground">
             Question {currentQuestion + 1} of {quizLength}
@@ -86,6 +85,9 @@ function Quiz() {
           <Progress value={progress} className="w-full" />
         </CardHeader>
         <CardContent className="flex flex-col items-center space-y-4">
+          <p className="text-sm text-muted-foreground">
+            Click on the button below the image to select Quartz
+          </p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
             <div className="relative p-2 bg-red-100/90 backdrop-blur-sm rounded-lg shadow-lg">
               <ImagePreview
@@ -120,9 +122,6 @@ function Quiz() {
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-center space-y-0.5">
-          <p className="text-sm text-muted-foreground">
-            Click on the button below the image to select Quartz
-          </p>
           <Popover>
             <PopoverTrigger asChild>
               <Button
