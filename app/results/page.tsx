@@ -175,7 +175,12 @@ function Results() {
               >
                 <Button
                   variant="outline"
-                  className="text-purple-700 border-purple-100 hover:text-purple-700 hover:bg-purple-100 bg-purple-50  "
+                  className="text-purple-50  hover:text-purple-200 hover:bg-purple-600 bg-purple-700 
+                    relative overflow-hidden
+                    before:absolute before:inset-0
+                    before:bg-gradient-to-r before:from-transparent before:via-white/25 before:to-transparent
+                    before:translate-x-[-100%] before:animate-[shimmer_2s_infinite]
+                    before:border-0"
                 >
                   View your answers
                   <ChevronRight className="ml-2 h-4 w-4" />
