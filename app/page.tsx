@@ -17,7 +17,7 @@ const buttons = [
     label: "Easy",
     type: QuizType.EASY,
     variant: "secondary",
-    className: "w-full",
+    className: "w-full bg-purple-100 hover:bg-purple-200 text-purple-800",
   },
   {
     label: "Normal",

@@ -3,13 +3,7 @@
 import { Suspense } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useResults } from "@/hooks/useResults";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Check, Circle, Home, X } from "lucide-react";
 import ImagePreview from "@/components/ImagePreview";
 import { CorrectAnswer } from "@/lib/quiz/type";
@@ -19,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { getBadgeColor } from "@/lib/leaderBoard";
+import { Badge } from "@/components/ui/badge";
 
 function UserAnswers() {
   const { quiz, questions, quizType, questionCorrectAnswer } = useQuiz();
@@ -36,19 +32,25 @@ function UserAnswers() {
       <Card className="overflow-hidden">
         <Button
           variant="ghost"
-          className="py-6   text-muted-foreground"
+          className="py-6 text-muted-foreground"
           onClick={() => router.back()}
         >
           <ArrowLeft className="h-4 w-4" />
           Back
         </Button>
-        <CardHeader className="flex flex-col items-center space-y-3 pb-6">
-          <CardTitle className="text-2xl font-bold text-center">
-            {username}&apos;s Quiz Results
-          </CardTitle>
-          <CardDescription className="text-lg text-gray-600">
-            {quiz.title}
-          </CardDescription>
+        <CardHeader className="flex flex-col items-center space-y-8 pb-6">
+          <div className="flex flex-col items-center space-y-3">
+            <Badge
+              className={`rounded-full border-none px-4 py-1 text-sm ${getBadgeColor(
+                quizType
+              )}`}
+            >
+              {quiz.title}
+            </Badge>
+            <CardTitle className="text-2xl font-bold text-center">
+              {username}&apos;s Quiz Results
+            </CardTitle>
+          </div>
           <div className="w-full max-w-xs mt-4 p-3 bg-gray-50 rounded-lg">
             <div className="flex items-center justify-between gap-4">
               <p className="text-base text-gray-600">Score</p>

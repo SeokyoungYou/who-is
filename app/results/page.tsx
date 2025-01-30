@@ -20,7 +20,7 @@ import { RefreshCw, Home, ChevronRight } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useResults } from "@/hooks/useResults";
-import { LeaderBoardEntry } from "@/lib/leaderBoard";
+import { getBadgeColor, LeaderBoardEntry } from "@/lib/leaderBoard";
 import {
   getLeaderboard,
   MAX_LEADERBOARD_ENTRIES,
@@ -71,7 +71,7 @@ function Results() {
     }, delay * 1000);
 
     return () => clearTimeout(timeout);
-  }, [score, leaderboardWithRank.length]);
+  }, [score, leaderboardWithRank.length, scoreCount]);
 
   const tableVariants = {
     hidden: { opacity: 0 },
@@ -129,7 +129,11 @@ function Results() {
     <>
       <Card className="w-full max-w-2xl">
         <CardHeader className="flex flex-col items-center space-y-4">
-          <Badge className="rounded-full border-none bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-1 text-sm">
+          <Badge
+            className={`rounded-full border-none px-4 py-1 text-sm ${getBadgeColor(
+              quizType
+            )}`}
+          >
             {quiz.title}
           </Badge>
           <CardTitle className="text-3xl font-bold text-center text-purple-900">
