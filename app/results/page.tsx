@@ -11,13 +11,12 @@ import {
 } from "@/components/ui/card";
 import {
   Table,
-  TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trophy, Medal, RefreshCw, Home, ChevronRight } from "lucide-react";
+import { RefreshCw, Home, ChevronRight } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useResults } from "@/hooks/useResults";
@@ -29,13 +28,8 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { Badge } from "@/components/ui/badge";
 import { getRank } from "@/lib/result";
-import {
-  motion,
-  useSpring,
-  useTransform,
-  animate,
-  useMotionValue,
-} from "framer-motion";
+import { motion, useTransform, animate, useMotionValue } from "framer-motion";
+import { Trophy, Medal } from "@phosphor-icons/react";
 
 function Results() {
   const [leaderboard, setLeaderboard] = useState<LeaderBoardEntry[]>([]);
@@ -279,11 +273,11 @@ export default function ResultsPage() {
 const getMedalIcon = (rank: number) => {
   switch (rank) {
     case 1:
-      return <Trophy className="h-6 w-6 text-yellow-400" />;
+      return <Trophy className="h-6 w-6 text-yellow-400" weight="fill" />;
     case 2:
-      return <Medal className="h-6 w-6 text-gray-400" />;
+      return <Medal className="h-6 w-6 text-gray-400" weight="fill" />;
     case 3:
-      return <Medal className="h-6 w-6 text-amber-600" />;
+      return <Medal className="h-6 w-6 text-amber-600" weight="fill" />;
     default:
       return null;
   }

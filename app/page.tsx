@@ -10,6 +10,7 @@ import { QuizType } from "@/lib/quiz/type";
 import { Spinner } from "@/components/ui/spinner";
 import { useResults } from "@/hooks/useResults";
 import { CheckIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
 const buttons = [
   {
@@ -38,6 +39,28 @@ const buttons = [
   },
 ];
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.1,
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 export default function WelcomeScreen() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -63,21 +86,37 @@ export default function WelcomeScreen() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          Who is Quartz?
-        </CardTitle>
+        <motion.div variants={item} initial="hidden" animate="show">
+          <CardTitle className="text-2xl font-bold text-center">
+            Who is Quartz?
+          </CardTitle>
+        </motion.div>
       </CardHeader>
       <CardContent className="flex flex-col items-center">
-        <p className="text-center mb-6">
+        <motion.p
+          className="text-center mb-6"
+          variants={item}
+          initial="hidden"
+          animate="show"
+        >
           Test your ability to identify Quartz in this exciting photo quiz!
-        </p>
+        </motion.p>
 
         {!isLoading && (
-          <div className="grid gap-4 mb-6 w-full">
+          <motion.div
+            className="grid gap-4 mb-6 w-full"
+            variants={container}
+            initial="hidden"
+            animate="show"
+          >
             {buttons.map((button) => (
-              <div key={button.type} className="relative">
+              <motion.div
+                key={button.type}
+                className="relative"
+                variants={item}
+              >
                 {quizResults[button.type].isDone && (
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-b  from-pink-500 to-pink-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-b from-pink-500 to-pink-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                     <CheckIcon className="h-3 w-3" strokeWidth={4} />
                   </div>
                 )}
@@ -90,9 +129,9 @@ export default function WelcomeScreen() {
                 >
                   {button.label}
                 </Button>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
 
         {isLoading && (
