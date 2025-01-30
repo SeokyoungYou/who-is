@@ -169,11 +169,11 @@ function Results() {
               >
                 <Button
                   variant="outline"
-                  className="text-purple-50  hover:text-purple-200 hover:bg-purple-600 bg-purple-700 
+                  className="text-purple-50  hover:text-purple-200 hover:bg-purple-500 bg-purple-600 
                     relative overflow-hidden
                     before:absolute before:inset-0
                     before:bg-gradient-to-r before:from-transparent before:via-white/25 before:to-transparent
-                    before:translate-x-[-100%] before:animate-[shimmer_2s_infinite]
+                    before:translate-x-[-100%] before:animate-[shimmer_3s_infinite]
                     before:border-0"
                 >
                   View your answers
@@ -271,13 +271,35 @@ export default function ResultsPage() {
 }
 
 const getMedalIcon = (rank: number) => {
+  const baseAnimation = "animate-[wiggle_2s_ease-in-out_infinite]";
+  const shimmerEffect =
+    "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent before:translate-x-[-100%] before:animate-[shimmer_1.5s_infinite]";
+
   switch (rank) {
     case 1:
-      return <Trophy className="h-6 w-6 text-yellow-400" weight="fill" />;
+      return (
+        <div className={`relative overflow-hidden ${baseAnimation}`}>
+          <div className={`relative ${shimmerEffect}`}>
+            <Trophy className="h-6 w-6 text-amber-400" weight="fill" />
+          </div>
+        </div>
+      );
     case 2:
-      return <Medal className="h-6 w-6 text-gray-400" weight="fill" />;
+      return (
+        <div className={`relative overflow-hidden ${baseAnimation}`}>
+          <div className={`relative ${shimmerEffect}`}>
+            <Medal className="h-6 w-6 text-slate-300 " weight="fill" />
+          </div>
+        </div>
+      );
     case 3:
-      return <Medal className="h-6 w-6 text-amber-600" weight="fill" />;
+      return (
+        <div className={`relative overflow-hidden ${baseAnimation}`}>
+          <div className={`relative ${shimmerEffect}`}>
+            <Medal className="h-6 w-6 text-orange-600" weight="fill" />
+          </div>
+        </div>
+      );
     default:
       return null;
   }
