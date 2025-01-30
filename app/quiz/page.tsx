@@ -26,6 +26,7 @@ import {
   ResponsiveModalFooter,
 } from "@/components/ui/responsive-modal";
 import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { CorrectAnswer } from "@/lib/quiz/type";
 import { useQuiz } from "@/hooks/useQuiz";
@@ -132,40 +133,61 @@ function Quiz() {
           </p>
           <Progress value={progress} className="w-full" />
         </CardHeader>
-        <CardContent className="flex flex-col items-center space-y-4">
-          <p className="text-sm">{questions[currentQuestion].title}</p>
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <div className="relative p-2 bg-red-100/90 backdrop-blur-sm rounded-lg shadow-lg">
-              <ImagePreview
-                src={questions[currentQuestion].leftImage}
-                alt="Left Person"
-                width={300}
-                height={300}
-                className="rounded-lg"
-              />
-              <Button
-                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-red-500/80 hover:bg-red-600/80 backdrop-blur-sm opacity-90"
-                onClick={() => handleAnswer(CorrectAnswer.LEFT)}
-              >
-                Select Red
-              </Button>
-            </div>
-            <div className="relative p-2 bg-blue-100/90 backdrop-blur-sm rounded-lg shadow-lg">
-              <ImagePreview
-                src={questions[currentQuestion].rightImage}
-                alt="Right Person"
-                width={300}
-                height={300}
-                className="rounded-lg"
-              />
-              <Button
-                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500/80 hover:bg-blue-600/80 backdrop-blur-sm opacity-90"
-                onClick={() => handleAnswer(CorrectAnswer.RIGHT)}
-              >
-                Select Blue
-              </Button>
-            </div>
-          </div>
+        <CardContent className="flex flex-col items-center space-y-4 overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentQuestion}
+              initial={{ x: 50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -50, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full space-y-4"
+            >
+              <p className="text-sm text-center font-semibold">
+                {questions[currentQuestion].title}
+              </p>
+              <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <motion.div
+                  className="relative p-2 bg-red-100/90 backdrop-blur-sm rounded-lg shadow-lg"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <ImagePreview
+                    src={questions[currentQuestion].leftImage}
+                    alt="Left Person"
+                    width={300}
+                    height={300}
+                    className="rounded-lg"
+                  />
+                  <Button
+                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-red-500/80 hover:bg-red-600/80 backdrop-blur-sm opacity-90"
+                    onClick={() => handleAnswer(CorrectAnswer.LEFT)}
+                  >
+                    Select Red
+                  </Button>
+                </motion.div>
+                <motion.div
+                  className="relative p-2 bg-blue-100/90 backdrop-blur-sm rounded-lg shadow-lg"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <ImagePreview
+                    src={questions[currentQuestion].rightImage}
+                    alt="Right Person"
+                    width={300}
+                    height={300}
+                    className="rounded-lg"
+                  />
+                  <Button
+                    className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500/80 hover:bg-blue-600/80 backdrop-blur-sm opacity-90"
+                    onClick={() => handleAnswer(CorrectAnswer.RIGHT)}
+                  >
+                    Select Blue
+                  </Button>
+                </motion.div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </CardContent>
         <CardFooter className="flex flex-col items-center space-y-12">
           <div className="flex self-center items-center space-x-4">

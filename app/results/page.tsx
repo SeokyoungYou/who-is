@@ -29,6 +29,13 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { Badge } from "@/components/ui/badge";
 import { getRank } from "@/lib/result";
+import {
+  motion,
+  useSpring,
+  useTransform,
+  animate,
+  useMotionValue,
+} from "framer-motion";
 
 function Results() {
   const [leaderboard, setLeaderboard] = useState<LeaderBoardEntry[]>([]);
@@ -48,6 +55,9 @@ function Results() {
 
   const userRank = getRank(score, leaderboard);
 
+  const scoreCount = useMotionValue(0);
+  const roundedScore = useTransform(scoreCount, (latest) => Math.round(latest));
+
   useEffect(() => {
     getLeaderboard({ quizType }).then((leaderboard) => {
       if (leaderboard) {
@@ -55,6 +65,71 @@ function Results() {
       }
     });
   }, [quizType]);
+
+  useEffect(() => {
+    const delay = leaderboardWithRank.length * 0.1 + 0.5;
+    const timeout = setTimeout(() => {
+      const animation = animate(scoreCount, score, {
+        duration: 1,
+        ease: "easeOut",
+      });
+      return animation.stop;
+    }, delay * 1000);
+
+    return () => clearTimeout(timeout);
+  }, [score, leaderboardWithRank.length]);
+
+  const tableVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        when: "beforeChildren",
+        duration: 0.5,
+      },
+    },
+  };
+
+  const scoreVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: leaderboardWithRank.length * 0.1 + 0.5,
+      },
+    },
+  };
+
+  const rankVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: leaderboardWithRank.length * 0.1 + 0.7,
+      },
+    },
+  };
+
+  const rowVariants = {
+    hidden: {
+      opacity: 0,
+      x: -50,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
 
   return (
     <>
@@ -71,18 +146,28 @@ function Results() {
           <CardContent className="flex flex-col items-center space-y-8">
             <div className="text-center space-y-6">
               <div className="flex justify-center items-center gap-16">
-                <div className="rounded-lg p-4">
+                <motion.div
+                  className="rounded-lg p-4"
+                  variants={scoreVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
                   <p className="text-lg text-muted-foreground mb-1">Score</p>
                   <p className="text-4xl font-bold text-purple-700">
-                    {score} / {quizLength}
+                    <motion.span>{roundedScore}</motion.span> / {quizLength}
                   </p>
-                </div>
-                <div className="rounded-lg p-4">
+                </motion.div>
+                <motion.div
+                  className="rounded-lg p-4"
+                  variants={rankVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
                   <p className="text-lg text-muted-foreground mb-1">Rank</p>
                   <p className="text-4xl font-bold text-purple-700">
                     {userRank === 0 ? "-" : `#${userRank}`}
                   </p>
-                </div>
+                </motion.div>
               </div>
               <Link
                 href={`/user-answers?type=${quizType}`}
@@ -97,11 +182,11 @@ function Results() {
                 </Button>
               </Link>
             </div>
-            <div className="w-full">
+            <div className="w-full overflow-hidden">
               <h3 className="text-xl font-semibold mb-4 text-gray-900">
                 Leaderboard
               </h3>
-              <Table>
+              <Table className="overflow-hidden">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="w-[100px]">Rank</TableHead>
@@ -109,13 +194,19 @@ function Results() {
                     <TableHead className="text-right">Score</TableHead>
                   </TableRow>
                 </TableHeader>
-                <TableBody>
+                <motion.tbody
+                  variants={tableVariants}
+                  initial="hidden"
+                  animate="visible"
+                  className="overflow-hidden"
+                >
                   {leaderboardWithRank.map((entry, index) => (
-                    <TableRow
+                    <motion.tr
                       key={index}
-                      className={
+                      variants={rowVariants}
+                      className={`${
                         score === entry.score ? "bg-purple-50/100" : ""
-                      }
+                      }`}
                     >
                       <TableCell className="font-medium">
                         <div className="flex items-center space-x-2">
@@ -129,10 +220,10 @@ function Results() {
                       <TableCell className="text-right text-gray-900 font-medium">
                         {entry.score}
                       </TableCell>
-                    </TableRow>
+                    </motion.tr>
                   ))}
                   {userRank > leaderboardWithRank.length && (
-                    <TableRow className="bg-gray-50/50">
+                    <motion.tr variants={rowVariants} className="bg-gray-50/50">
                       <TableCell className="font-medium text-gray-900">
                         {userRank}
                       </TableCell>
@@ -140,9 +231,9 @@ function Results() {
                       <TableCell className="text-right text-gray-900 font-medium">
                         {score}
                       </TableCell>
-                    </TableRow>
+                    </motion.tr>
                   )}
-                </TableBody>
+                </motion.tbody>
               </Table>
             </div>
           </CardContent>
