@@ -17,7 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trophy, Medal, RefreshCw, Home } from "lucide-react";
+import { Trophy, Medal, RefreshCw, Home, ChevronRight } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useResults } from "@/hooks/useResults";
@@ -60,10 +60,10 @@ function Results() {
     <>
       <Card className="w-full max-w-2xl">
         <CardHeader className="flex flex-col items-center space-y-4">
-          <Badge className="rounded-full border-none bg-gradient-to-r from-indigo-500 to-indigo-700 text-white px-4 py-1 text-sm">
+          <Badge className="rounded-full border-none bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-1 text-sm">
             {quiz.title}
           </Badge>
-          <CardTitle className="text-3xl font-bold text-center text-indigo-900">
+          <CardTitle className="text-3xl font-bold text-center text-purple-900">
             TOP {MAX_LEADERBOARD_ENTRIES}
           </CardTitle>
         </CardHeader>
@@ -73,13 +73,13 @@ function Results() {
               <div className="flex justify-center items-center gap-16">
                 <div className="rounded-lg p-4">
                   <p className="text-lg text-muted-foreground mb-1">Score</p>
-                  <p className="text-4xl font-bold text-indigo-700">
+                  <p className="text-4xl font-bold text-purple-700">
                     {score} / {quizLength}
                   </p>
                 </div>
                 <div className="rounded-lg p-4">
                   <p className="text-lg text-muted-foreground mb-1">Rank</p>
-                  <p className="text-4xl font-bold text-indigo-700">
+                  <p className="text-4xl font-bold text-purple-700">
                     {userRank === 0 ? "-" : `#${userRank}`}
                   </p>
                 </div>
@@ -90,14 +90,15 @@ function Results() {
               >
                 <Button
                   variant="outline"
-                  className="text-indigo-700 border-indigo-50 hover:text-indigo-700 hover:bg-indigo-100 bg-indigo-50  "
+                  className="text-purple-700 border-purple-100 hover:text-purple-700 hover:bg-purple-100 bg-purple-50  "
                 >
                   View your answers
+                  <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
             </div>
             <div className="w-full">
-              <h3 className="text-xl font-semibold mb-4 text-indigo-900">
+              <h3 className="text-xl font-semibold mb-4 text-gray-900">
                 Leaderboard
               </h3>
               <Table>
@@ -112,29 +113,31 @@ function Results() {
                   {leaderboardWithRank.map((entry, index) => (
                     <TableRow
                       key={index}
-                      className={score > entry.score ? "bg-indigo-50/70" : ""}
+                      className={
+                        score === entry.score ? "bg-purple-50/100" : ""
+                      }
                     >
                       <TableCell className="font-medium">
                         <div className="flex items-center space-x-2">
                           {getMedalIcon(entry.rank)}
-                          <span className="text-indigo-900">{entry.rank}</span>
+                          <span className="text-gray-900">{entry.rank}</span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-indigo-900">
+                      <TableCell className="text-gray-900">
                         {entry.name}
                       </TableCell>
-                      <TableCell className="text-right text-indigo-900 font-medium">
+                      <TableCell className="text-right text-gray-900 font-medium">
                         {entry.score}
                       </TableCell>
                     </TableRow>
                   ))}
                   {userRank > leaderboardWithRank.length && (
-                    <TableRow className="bg-indigo-50/50">
-                      <TableCell className="font-medium text-indigo-900">
+                    <TableRow className="bg-gray-50/50">
+                      <TableCell className="font-medium text-gray-900">
                         {userRank}
                       </TableCell>
-                      <TableCell className="text-indigo-900">You</TableCell>
-                      <TableCell className="text-right text-indigo-900 font-medium">
+                      <TableCell className="text-gray-900">You</TableCell>
+                      <TableCell className="text-right text-gray-900 font-medium">
                         {score}
                       </TableCell>
                     </TableRow>
@@ -154,7 +157,8 @@ function Results() {
         <CardFooter className="flex justify-center space-x-4 mt-8">
           <Link href="/">
             <Button variant="outline" className="hover:bg-gray-50">
-              <Home className="mr-2 h-4 w-4" /> Back to Home
+              <Home className="mr-2 h-4 w-4" />
+              Home
             </Button>
           </Link>
           <Link href={`/quiz?type=${quizType}`}>

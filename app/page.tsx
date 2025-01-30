@@ -22,19 +22,19 @@ const buttons = [
     label: "Normal",
     type: QuizType.NORMAL,
     variant: "secondary",
-    className: "w-full bg-indigo-400 hover:bg-indigo-500 text-white",
+    className: "w-full bg-purple-400 hover:bg-purple-500 text-white",
   },
   {
     label: "Hard",
     type: QuizType.HARD,
     variant: "secondary",
-    className: "w-full bg-indigo-600 hover:bg-indigo-700 text-white",
+    className: "w-full bg-purple-600 hover:bg-purple-700 text-white",
   },
   {
     label: "Super Hard",
     type: QuizType.SUPER_HARD,
     variant: "secondary",
-    className: "w-full bg-indigo-800 hover:bg-indigo-900 text-white",
+    className: "w-full bg-purple-800 hover:bg-purple-900 text-white",
   },
 ];
 
@@ -77,7 +77,7 @@ export default function WelcomeScreen() {
             {buttons.map((button) => (
               <div key={button.type} className="relative">
                 {quizResults[button.type].isDone && (
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-b  from-purple-500 to-purple-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-b  from-pink-500 to-pink-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                     <CheckIcon className="h-3 w-3" strokeWidth={4} />
                   </div>
                 )}
