@@ -116,9 +116,19 @@ export default function WelcomeScreen() {
                 variants={item}
               >
                 {quizResults[button.type].isDone && (
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-b from-pink-500 to-pink-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                      delay: 1.3,
+                      type: "spring",
+                      stiffness: 200,
+                      damping: 10,
+                    }}
+                    className="absolute -top-2 -right-2 bg-gradient-to-b from-pink-500 to-pink-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                  >
                     <CheckIcon className="h-3 w-3" strokeWidth={4} />
-                  </div>
+                  </motion.div>
                 )}
                 <Button
                   variant={button.variant as ButtonProps["variant"]}
