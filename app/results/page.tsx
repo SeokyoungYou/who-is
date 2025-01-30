@@ -28,6 +28,7 @@ import {
 } from "@/firebase/firestore/leaderboard";
 import { Spinner } from "@/components/ui/spinner";
 import { Badge } from "@/components/ui/badge";
+import { getRank } from "@/lib/result";
 
 function Results() {
   const [leaderboard, setLeaderboard] = useState<LeaderBoardEntry[]>([]);
@@ -37,7 +38,15 @@ function Results() {
   const quizResult = quizResults[quizType];
   const score = quizResult.score;
 
-  const userRank = leaderboard.findIndex((entry) => score > entry.score) + 1;
+  const leaderboardWithRank =
+    leaderboard.length > 0
+      ? leaderboard.map((entry) => ({
+          ...entry,
+          rank: getRank(entry.score, leaderboard),
+        }))
+      : [];
+
+  const userRank = getRank(score, leaderboard);
 
   useEffect(() => {
     getLeaderboard({ quizType }).then((leaderboard) => {
@@ -58,7 +67,7 @@ function Results() {
             TOP {MAX_LEADERBOARD_ENTRIES}
           </CardTitle>
         </CardHeader>
-        {leaderboard.length !== 0 ? (
+        {leaderboardWithRank.length !== 0 ? (
           <CardContent className="flex flex-col items-center space-y-8">
             <div className="text-center space-y-6">
               <div className="flex justify-center items-center gap-16">
@@ -100,15 +109,15 @@ function Results() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {leaderboard.map((entry, index) => (
+                  {leaderboardWithRank.map((entry, index) => (
                     <TableRow
                       key={index}
                       className={score > entry.score ? "bg-indigo-50/70" : ""}
                     >
                       <TableCell className="font-medium">
                         <div className="flex items-center space-x-2">
-                          {getMedalIcon(index + 1)}
-                          <span className="text-indigo-900">{index + 1}</span>
+                          {getMedalIcon(entry.rank)}
+                          <span className="text-indigo-900">{entry.rank}</span>
                         </div>
                       </TableCell>
                       <TableCell className="text-indigo-900">
@@ -119,7 +128,7 @@ function Results() {
                       </TableCell>
                     </TableRow>
                   ))}
-                  {userRank > leaderboard.length && (
+                  {userRank > leaderboardWithRank.length && (
                     <TableRow className="bg-indigo-50/50">
                       <TableCell className="font-medium text-indigo-900">
                         {userRank}

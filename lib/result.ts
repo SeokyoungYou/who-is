@@ -1,3 +1,4 @@
+import { LeaderBoardEntry } from "./leaderBoard";
 import { CorrectAnswer } from "./quiz/type";
 
 export interface QuestionResult {
@@ -44,3 +45,7 @@ export function updateQuestionResults(
 
   return results;
 }
+
+export const getRank = (score: number, leaderboard: LeaderBoardEntry[]) => {
+  return leaderboard.filter((entry) => entry.score > score).length + 1;
+};
