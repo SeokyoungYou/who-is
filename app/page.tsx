@@ -11,6 +11,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { useResults } from "@/hooks/useResults";
 import { CheckIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const buttons = [
   {
@@ -87,9 +88,19 @@ export default function WelcomeScreen() {
     <Card className="w-full max-w-md">
       <CardHeader>
         <motion.div variants={item} initial="hidden" animate="show">
-          <CardTitle className="text-2xl font-bold text-center">
-            Who is Quartz?
-          </CardTitle>
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-32 h-32 rounded-full overflow-hidden">
+              <Image
+                src="/quartz.png"
+                alt="Quartz Logo"
+                width={128}
+                height={128}
+              />
+            </div>
+            <CardTitle className="text-2xl font-bold text-center">
+              Who is Quartz?
+            </CardTitle>
+          </div>
         </motion.div>
       </CardHeader>
       <CardContent className="flex flex-col items-center">
