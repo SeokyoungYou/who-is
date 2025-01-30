@@ -12,10 +12,30 @@ import { useResults } from "@/hooks/useResults";
 import { CheckIcon } from "lucide-react";
 
 const buttons = [
-  { label: "Easy", type: QuizType.EASY, variant: "secondary" },
-  { label: "Normal", type: QuizType.NORMAL, variant: "gray" },
-  { label: "Hard", type: QuizType.HARD, variant: "default" },
-  { label: "Super Hard", type: QuizType.SUPER_HARD, variant: "destructive" },
+  {
+    label: "Easy",
+    type: QuizType.EASY,
+    variant: "secondary",
+    className: "w-full",
+  },
+  {
+    label: "Normal",
+    type: QuizType.NORMAL,
+    variant: "secondary",
+    className: "w-full bg-indigo-400 hover:bg-indigo-500 text-white",
+  },
+  {
+    label: "Hard",
+    type: QuizType.HARD,
+    variant: "secondary",
+    className: "w-full bg-indigo-600 hover:bg-indigo-700 text-white",
+  },
+  {
+    label: "Super Hard",
+    type: QuizType.SUPER_HARD,
+    variant: "secondary",
+    className: "w-full bg-indigo-800 hover:bg-indigo-900 text-white",
+  },
 ];
 
 export default function WelcomeScreen() {
@@ -57,7 +77,7 @@ export default function WelcomeScreen() {
             {buttons.map((button) => (
               <div key={button.type} className="relative">
                 {quizResults[button.type].isDone && (
-                  <div className="absolute -top-2 -right-2 bg-gradient-to-b from-purple-400 to-pink-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  <div className="absolute -top-2 -right-2 bg-gradient-to-b  from-purple-500 to-purple-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
                     <CheckIcon className="h-3 w-3" strokeWidth={4} />
                   </div>
                 )}
@@ -66,7 +86,7 @@ export default function WelcomeScreen() {
                   size="lg"
                   onClick={() => handleStartQuiz(button.type)}
                   disabled={isLoading}
-                  className="w-full"
+                  className={button.className}
                 >
                   {button.label}
                 </Button>

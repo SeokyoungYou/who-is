@@ -26,6 +26,8 @@ import {
   getLeaderboard,
   MAX_LEADERBOARD_ENTRIES,
 } from "@/firebase/firestore/leaderboard";
+import { Spinner } from "@/components/ui/spinner";
+import { Badge } from "@/components/ui/badge";
 
 function Results() {
   const [leaderboard, setLeaderboard] = useState<LeaderBoardEntry[]>([]);
@@ -48,22 +50,47 @@ function Results() {
   return (
     <>
       <Card className="w-full max-w-2xl">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            {quiz.title} - TOP {MAX_LEADERBOARD_ENTRIES}
+        <CardHeader className="flex flex-col items-center space-y-4">
+          <Badge className="rounded-full border-none bg-gradient-to-r from-indigo-500 to-indigo-700 text-white px-4 py-1 text-sm">
+            {quiz.title}
+          </Badge>
+          <CardTitle className="text-3xl font-bold text-center text-indigo-900">
+            TOP {MAX_LEADERBOARD_ENTRIES}
           </CardTitle>
         </CardHeader>
         {leaderboard.length !== 0 ? (
-          <CardContent className="flex flex-col items-center space-y-6">
-            <div className="text-center">
-              <p className="text-xl mb-2">Your Score:</p>
-              <p className="text-4xl font-bold text-blue-600">
-                {score} / {quizLength}
-              </p>
-              <p className="text-lg mt-2">Rank: {userRank}</p>
+          <CardContent className="flex flex-col items-center space-y-8">
+            <div className="text-center space-y-6">
+              <div className="flex justify-center items-center gap-16">
+                <div className="rounded-lg p-4">
+                  <p className="text-lg text-muted-foreground mb-1">Score</p>
+                  <p className="text-4xl font-bold text-indigo-700">
+                    {score} / {quizLength}
+                  </p>
+                </div>
+                <div className="rounded-lg p-4">
+                  <p className="text-lg text-muted-foreground mb-1">Rank</p>
+                  <p className="text-4xl font-bold text-indigo-700">
+                    {userRank === 0 ? "-" : `#${userRank}`}
+                  </p>
+                </div>
+              </div>
+              <Link
+                href={`/user-answers?type=${quizType}`}
+                className="mt-6 inline-block"
+              >
+                <Button
+                  variant="outline"
+                  className="text-indigo-700 border-indigo-50 hover:text-indigo-700 hover:bg-indigo-100 bg-indigo-50  "
+                >
+                  View your answers
+                </Button>
+              </Link>
             </div>
             <div className="w-full">
-              <h3 className="text-xl font-semibold mb-2">Leaderboard</h3>
+              <h3 className="text-xl font-semibold mb-4 text-indigo-900">
+                Leaderboard
+              </h3>
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -76,25 +103,31 @@ function Results() {
                   {leaderboard.map((entry, index) => (
                     <TableRow
                       key={index}
-                      className={score > entry.score ? "bg-green-100" : ""}
+                      className={score > entry.score ? "bg-indigo-50/70" : ""}
                     >
                       <TableCell className="font-medium">
                         <div className="flex items-center space-x-2">
                           {getMedalIcon(index + 1)}
-                          <span>{index + 1}</span>
+                          <span className="text-indigo-900">{index + 1}</span>
                         </div>
                       </TableCell>
-                      <TableCell>{entry.name}</TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-indigo-900">
+                        {entry.name}
+                      </TableCell>
+                      <TableCell className="text-right text-indigo-900 font-medium">
                         {entry.score}
                       </TableCell>
                     </TableRow>
                   ))}
                   {userRank > leaderboard.length && (
-                    <TableRow className="bg-green-100">
-                      <TableCell className="font-medium">{userRank}</TableCell>
-                      <TableCell>You</TableCell>
-                      <TableCell className="text-right">{score}</TableCell>
+                    <TableRow className="bg-indigo-50/50">
+                      <TableCell className="font-medium text-indigo-900">
+                        {userRank}
+                      </TableCell>
+                      <TableCell className="text-indigo-900">You</TableCell>
+                      <TableCell className="text-right text-indigo-900 font-medium">
+                        {score}
+                      </TableCell>
                     </TableRow>
                   )}
                 </TableBody>
@@ -102,13 +135,16 @@ function Results() {
             </div>
           </CardContent>
         ) : (
-          <CardContent className="flex flex-col items-center space-y-6">
-            <p>Loading leaderboard...</p>
+          <CardContent className="flex flex-col items-center space-y-4 my-24">
+            <Spinner size="large" />
+            <p className="text-center text-sm text-muted-foreground">
+              Loading leaderboard...
+            </p>
           </CardContent>
         )}
-        <CardFooter className="flex justify-center space-x-4">
+        <CardFooter className="flex justify-center space-x-4 mt-8">
           <Link href="/">
-            <Button variant="outline">
+            <Button variant="outline" className="hover:bg-gray-50">
               <Home className="mr-2 h-4 w-4" /> Back to Home
             </Button>
           </Link>
