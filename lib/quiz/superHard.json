@@ -65,7 +65,7 @@
       "title": "Trampoline",
       "leftImage": "/images/superHard/trampoline-1.png",
       "rightImage": "/images/superHard/trampoline-2.png",
-      "correctAnswer": "right"
+      "correctAnswer": "left"
     },
     {
       "id": "poem",
