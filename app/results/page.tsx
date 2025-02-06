@@ -244,15 +244,15 @@ function Results() {
           </CardContent>
         )}
         <CardFooter className="flex justify-center space-x-4 mt-8">
+          <Link href={`/quiz?type=${quizType}`}>
+            <Button variant="ghost">
+              <RefreshCw className="mr-2 h-4 w-4" /> Play Again
+            </Button>
+          </Link>
           <Link href="/">
             <Button variant="outline" className="hover:bg-gray-50">
               <Home className="mr-2 h-4 w-4" />
               Home
-            </Button>
-          </Link>
-          <Link href={`/quiz?type=${quizType}`}>
-            <Button>
-              <RefreshCw className="mr-2 h-4 w-4" /> Play Again
             </Button>
           </Link>
         </CardFooter>

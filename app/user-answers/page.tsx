@@ -80,11 +80,11 @@ function UserAnswers() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div
-                  className={`relative ${
-                    correctAnswer?.answer === CorrectAnswer.LEFT
-                      ? "border-2 border-green-500 rounded-lg"
-                      : userAnswer?.answer === CorrectAnswer.LEFT
-                      ? "border-2 border-red-500 rounded-lg"
+                  className={`relative rounded-xl transition-all overflow-hidden ${
+                    userAnswer?.answer === CorrectAnswer.LEFT && isCorrect
+                      ? "ring-[4px] ring-green-400/90 shadow-[0_0_15px_rgba(34,197,94,0.3)] bg-green-50/30"
+                      : userAnswer?.answer === CorrectAnswer.LEFT && !isCorrect
+                      ? "ring-[4px] ring-red-400/90 shadow-[0_0_15px_rgba(239,68,68,0.3)] bg-red-50/30"
                       : ""
                   }`}
                 >
@@ -93,25 +93,25 @@ function UserAnswers() {
                     alt="Left Image"
                     width={300}
                     height={300}
-                    className="rounded-lg"
+                    className="w-full h-full object-cover"
                   />
                   {correctAnswer?.answer === CorrectAnswer.LEFT && (
-                    <div className="absolute opacity-80 top-2 left-2 bg-green-500 text-white px-1 py-1 rounded-full">
-                      <Check className="h-4 w-4" />
+                    <div className="absolute opacity-90 top-1.5 left-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-0.5 py-0.5 rounded-full shadow-lg sm:top-3 sm:left-2 sm:px-1 sm:py-1">
+                      <Check className="h-3 w-3 sm:h-4 sm:w-4" />
                     </div>
                   )}
                   {userAnswer?.answer === CorrectAnswer.LEFT && (
-                    <div className="absolute opacity-80 top-2 right-2 bg-gradient-to-b from-purple-300 to-pink-300 text-white px-2 py-1 rounded">
+                    <div className="absolute opacity-90 top-1 right-1 bg-gradient-to-r from-purple-400 to-pink-400 text-white px-1.5 py-0.5 text-xs rounded-md shadow-lg sm:top-2 sm:right-2 sm:px-2 sm:py-1 sm:text-sm">
                       My choice
                     </div>
                   )}
                 </div>
                 <div
-                  className={`relative ${
-                    correctAnswer?.answer === CorrectAnswer.RIGHT
-                      ? "border-2 border-green-500 rounded-lg"
-                      : userAnswer?.answer === CorrectAnswer.RIGHT
-                      ? "border-2 border-red-500 rounded-lg"
+                  className={`relative rounded-xl transition-all overflow-hidden ${
+                    userAnswer?.answer === CorrectAnswer.RIGHT && isCorrect
+                      ? "ring-[4px] ring-green-400/90 shadow-[0_0_15px_rgba(34,197,94,0.3)] bg-green-50/30"
+                      : userAnswer?.answer === CorrectAnswer.RIGHT && !isCorrect
+                      ? "ring-[4px] ring-red-400/90 shadow-[0_0_15px_rgba(239,68,68,0.3)] bg-red-50/30"
                       : ""
                   }`}
                 >
@@ -120,15 +120,15 @@ function UserAnswers() {
                     alt="Right Image"
                     width={300}
                     height={300}
-                    className="rounded-lg"
+                    className="w-full h-full object-cover"
                   />
                   {correctAnswer?.answer === CorrectAnswer.RIGHT && (
-                    <div className="absolute opacity-80 top-2 left-2 bg-green-500 text-white px-1 py-1 rounded-full">
-                      <Check className="h-4 w-4" />
+                    <div className="absolute opacity-90 top-1.5 left-1 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-0.5 py-0.5 rounded-full shadow-lg sm:top-3 sm:left-2 sm:px-1 sm:py-1">
+                      <Check className="h-3 w-3 sm:h-4 sm:w-4" />
                     </div>
                   )}
                   {userAnswer?.answer === CorrectAnswer.RIGHT && (
-                    <div className="absolute opacity-80 top-2 right-2 bg-gradient-to-b from-purple-300 to-pink-300 text-white px-2 py-1 rounded">
+                    <div className="absolute opacity-90 top-1 right-1 bg-gradient-to-r from-purple-400 to-pink-400 text-white px-1.5 py-0.5 text-xs rounded-md shadow-lg sm:top-2 sm:right-2 sm:px-2 sm:py-1 sm:text-sm">
                       My choice
                     </div>
                   )}
