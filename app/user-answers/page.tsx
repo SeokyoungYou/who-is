@@ -13,8 +13,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { getBadgeColor } from "@/lib/leaderBoard";
-import { Badge } from "@/components/ui/badge";
+import QuizBadge from "@/components/QuizBadge";
 
 function UserAnswers() {
   const { quiz, questions, quizType, questionCorrectAnswer } = useQuiz();
@@ -40,13 +39,7 @@ function UserAnswers() {
         </Button>
         <CardHeader className="flex flex-col items-center space-y-8 pb-6">
           <div className="flex flex-col items-center space-y-3">
-            <Badge
-              className={`rounded-full border-none px-4 py-1 text-sm ${getBadgeColor(
-                quizType
-              )}`}
-            >
-              {quiz.title}
-            </Badge>
+            <QuizBadge quizType={quizType}>{quiz.title}</QuizBadge>
             <CardTitle className="text-2xl font-bold text-center">
               {username}&apos;s Quiz Results
             </CardTitle>

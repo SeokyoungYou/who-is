@@ -20,16 +20,16 @@ import { RefreshCw, Home, ChevronRight } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { useQuiz } from "@/hooks/useQuiz";
 import { useResults } from "@/hooks/useResults";
-import { getBadgeColor, LeaderBoardEntry } from "@/lib/leaderBoard";
+import { LeaderBoardEntry } from "@/lib/leaderBoard";
 import {
   getLeaderboard,
   MAX_LEADERBOARD_ENTRIES,
 } from "@/firebase/firestore/leaderboard";
 import { Spinner } from "@/components/ui/spinner";
-import { Badge } from "@/components/ui/badge";
 import { getRank } from "@/lib/result";
 import { motion, useTransform, animate, useMotionValue } from "framer-motion";
 import { Trophy, Medal } from "@phosphor-icons/react";
+import QuizBadge from "@/components/QuizBadge";
 
 function Results() {
   const [leaderboard, setLeaderboard] = useState<LeaderBoardEntry[]>([]);
@@ -129,13 +129,8 @@ function Results() {
     <>
       <Card className="w-full max-w-2xl">
         <CardHeader className="flex flex-col items-center space-y-4">
-          <Badge
-            className={`rounded-full border-none px-4 py-1 text-sm ${getBadgeColor(
-              quizType
-            )}`}
-          >
-            {quiz.title}
-          </Badge>
+          <QuizBadge quizType={quizType}>{quiz.title}</QuizBadge>
+
           <CardTitle className="text-3xl font-bold text-center text-purple-900">
             TOP {MAX_LEADERBOARD_ENTRIES}
           </CardTitle>
