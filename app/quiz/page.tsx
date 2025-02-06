@@ -121,7 +121,7 @@ function Quiz() {
 
   return (
     <>
-      <Card className="w-full max-w-2xl">
+      <Card className="w-full max-w-2xl  ">
         <CardHeader className="flex flex-col items-center gap-1">
           <div className="self-center">
             <QuizBadge quizType={quizType}>{quiz.title}</QuizBadge>

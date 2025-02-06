@@ -28,7 +28,7 @@ function UserAnswers() {
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-4">
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden ">
         <Button
           variant="ghost"
           className="py-6 text-muted-foreground"
@@ -66,7 +66,7 @@ function UserAnswers() {
 
         return (
           <Card key={question.id}>
-            <CardContent className="pt-6 space-y-4">
+            <CardContent className="pt-6 space-y-4 ">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold">
                   Question {index + 1}: {question.title}

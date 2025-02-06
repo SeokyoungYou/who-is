@@ -127,7 +127,7 @@ function Results() {
 
   return (
     <>
-      <Card className="w-full max-w-2xl">
+      <Card className="w-full max-w-2xl bg-gradient-to-br from-purple-50 to-pink-50 ">
         <CardHeader className="flex flex-col items-center space-y-4">
           <QuizBadge quizType={quizType}>{quiz.title}</QuizBadge>
 
@@ -221,12 +221,15 @@ function Results() {
                     </motion.tr>
                   ))}
                   {userRank > leaderboardWithRank.length && (
-                    <motion.tr variants={rowVariants} className="bg-gray-50/50">
-                      <TableCell className="font-medium text-gray-900">
+                    <motion.tr
+                      variants={rowVariants}
+                      className="bg-purple-200/50 "
+                    >
+                      <TableCell className="font-medium text-gray-900 rounded-l-lg">
                         {userRank}
                       </TableCell>
                       <TableCell className="text-gray-900">You</TableCell>
-                      <TableCell className="text-right text-gray-900 font-medium">
+                      <TableCell className="text-right text-gray-900 font-medium  rounded-r-lg">
                         {score}
                       </TableCell>
                     </motion.tr>
