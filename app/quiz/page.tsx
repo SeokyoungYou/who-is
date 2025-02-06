@@ -41,6 +41,7 @@ import {
 import { calculateScore } from "@/lib/result";
 import { LeaderBoardEntry } from "@/lib/leaderBoard";
 import { addLeaderboardEntry } from "@/firebase/firestore/leaderboard";
+import QuizBadge from "@/components/QuizBadge";
 
 function Quiz() {
   const { quiz, questions, quizLength, quizType, questionCorrectAnswer } =
@@ -121,10 +122,10 @@ function Quiz() {
   return (
     <>
       <Card className="w-full max-w-2xl">
-        <CardHeader>
-          <CardTitle className="text-xl font-bold text-center">
-            {quiz.title}
-          </CardTitle>
+        <CardHeader className="flex flex-col items-center gap-1">
+          <div className="self-center">
+            <QuizBadge quizType={quizType}>{quiz.title}</QuizBadge>
+          </div>
           <p className="text-center text-sm text-muted-foreground">
             💎 Find Quartz!
           </p>
@@ -143,7 +144,7 @@ function Quiz() {
               transition={{ duration: 0.3 }}
               className="w-full space-y-4"
             >
-              <p className="text-sm text-center font-semibold">
+              <p className="text-lg text-center font-semibold">
                 {questions[currentQuestion].title}
               </p>
               <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">

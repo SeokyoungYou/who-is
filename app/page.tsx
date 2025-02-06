@@ -10,7 +10,7 @@ import { QuizType } from "@/lib/quiz/type";
 import { Spinner } from "@/components/ui/spinner";
 import { useResults } from "@/hooks/useResults";
 import { CheckIcon } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 const buttons = [
@@ -125,62 +125,61 @@ export default function WelcomeScreen() {
           ability to identify Quartz in this exciting photo quiz!
         </motion.p>
 
-        {!isLoading && (
-          <motion.div
-            className="grid gap-4 mb-6 w-full"
-            variants={container}
-            initial="hidden"
-            animate="show"
-          >
-            {buttons.map((button) => (
-              <motion.div
-                key={button.type}
-                className="relative"
-                variants={item}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                {quizResults[button.type].isDone && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{
-                      delay: 1.3,
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 10,
-                    }}
-                    className="absolute -top-2 -right-2 bg-gradient-to-b from-pink-500 to-pink-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-lg z-10"
-                  >
-                    <CheckIcon className="h-3 w-3" strokeWidth={4} />
-                  </motion.div>
-                )}
-                <Button
-                  variant={button.variant as ButtonProps["variant"]}
-                  size="lg"
-                  onClick={() => handleStartQuiz(button.type)}
-                  disabled={isLoading}
-                  className={`${button.className} transform transition-all duration-200 shadow-md hover:shadow-lg`}
+        <AnimatePresence mode="wait">
+          {!isLoading ? (
+            <motion.div
+              key="buttons"
+              className="grid gap-4 mb-6 w-full"
+              variants={container}
+              initial="hidden"
+              animate="show"
+              exit={{ opacity: 0 }}
+            >
+              {buttons.map((button) => (
+                <motion.div
+                  key={button.type}
+                  className="relative"
+                  variants={item}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  layout
                 >
-                  {button.label}
-                </Button>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-
-        {isLoading && (
-          <motion.div
-            className="flex flex-col items-center gap-3"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <Spinner size="medium" className="text-purple-600" />
-            <p className="text-center text-sm text-purple-600 font-medium">
-              Loading...
-            </p>
-          </motion.div>
-        )}
+                  {quizResults[button.type].isDone && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute -top-2 -right-2 bg-gradient-to-b from-pink-500 to-pink-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-lg z-10"
+                    >
+                      <CheckIcon className="h-3 w-3" strokeWidth={4} />
+                    </motion.div>
+                  )}
+                  <Button
+                    variant={button.variant as ButtonProps["variant"]}
+                    size="lg"
+                    onClick={() => handleStartQuiz(button.type)}
+                    disabled={isLoading}
+                    className={`${button.className} transform transition-all duration-200 shadow-md hover:shadow-lg`}
+                  >
+                    {button.label}
+                  </Button>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="spinner"
+              className="flex flex-col items-center gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Spinner size="medium" className="text-purple-600" />
+              <p className="text-center text-sm text-purple-600 font-medium">
+                Loading...
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </CardContent>
     </Card>
   );
