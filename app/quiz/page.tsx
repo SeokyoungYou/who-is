@@ -190,7 +190,20 @@ function Quiz() {
             </motion.div>
           </AnimatePresence>
         </CardContent>
-        <CardFooter className="flex flex-col items-center space-y-12">
+        <CardFooter className="flex flex-col items-center space-y-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="link"
+                className="text-sm text-muted-foreground hover:text-primary"
+              >
+                💎 Click for Treasure Hint 💎
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent side="top" className="w-48 text-center p-3">
+              The cuter one is Quartz! 🤩
+            </PopoverContent>
+          </Popover>
           <div className="flex self-center items-center space-x-4">
             <Button
               variant="ghost"
@@ -201,20 +214,6 @@ function Quiz() {
               Prev
             </Button>
           </div>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="link"
-                className="text-sm text-muted-foreground hover:text-primary"
-              >
-                <Info className="mr-2 h-4 w-4" />
-                Click here for a hint
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent side="top" className="w-48 text-center p-3">
-              The cuter one is Quartz! 🤩
-            </PopoverContent>
-          </Popover>
         </CardFooter>
       </Card>
 
