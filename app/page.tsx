@@ -85,32 +85,44 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <motion.div variants={item} initial="hidden" animate="show">
+    <Card className="w-full max-w-md bg-gradient-to-br from-purple-50 to-pink-50 border-none shadow-xl">
+      <CardHeader className="pb-2">
+        <motion.div
+          variants={item}
+          initial="hidden"
+          animate="show"
+          className="relative"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-200 to-pink-200 rounded-full blur-3xl opacity-30 -z-10" />
           <div className="flex flex-col items-center gap-4">
-            <div className="w-32 h-32 rounded-full overflow-hidden">
+            <motion.div
+              className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-purple-200 shadow-lg"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               <Image
                 src="/quartz.png"
                 alt="Quartz Logo"
                 width={128}
                 height={128}
+                className="transform hover:scale-110 transition-transform duration-300"
               />
-            </div>
-            <CardTitle className="text-2xl font-bold text-center">
+            </motion.div>
+            <CardTitle className="text-3xl font-bold text-center bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text">
               Who is Quartz?
             </CardTitle>
           </div>
         </motion.div>
       </CardHeader>
-      <CardContent className="flex flex-col items-center">
+      <CardContent className="flex flex-col items-center pt-2">
         <motion.p
-          className="text-center mb-6"
+          className="text-center mb-8 text-gray-600 max-w-sm"
           variants={item}
           initial="hidden"
           animate="show"
         >
-          Test your ability to identify Quartz in this exciting photo quiz!
+          <span className="font-medium">Challenge yourself!</span> Test your
+          ability to identify Quartz in this exciting photo quiz!
         </motion.p>
 
         {!isLoading && (
@@ -125,6 +137,8 @@ export default function WelcomeScreen() {
                 key={button.type}
                 className="relative"
                 variants={item}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {quizResults[button.type].isDone && (
                   <motion.div
@@ -136,7 +150,7 @@ export default function WelcomeScreen() {
                       stiffness: 200,
                       damping: 10,
                     }}
-                    className="absolute -top-2 -right-2 bg-gradient-to-b from-pink-500 to-pink-700 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                    className="absolute -top-2 -right-2 bg-gradient-to-b from-pink-500 to-pink-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs shadow-lg z-10"
                   >
                     <CheckIcon className="h-3 w-3" strokeWidth={4} />
                   </motion.div>
@@ -146,7 +160,7 @@ export default function WelcomeScreen() {
                   size="lg"
                   onClick={() => handleStartQuiz(button.type)}
                   disabled={isLoading}
-                  className={button.className}
+                  className={`${button.className} transform transition-all duration-200 shadow-md hover:shadow-lg`}
                 >
                   {button.label}
                 </Button>
@@ -156,12 +170,16 @@ export default function WelcomeScreen() {
         )}
 
         {isLoading && (
-          <div className="flex flex-col items-center gap-2">
-            <Spinner size="medium" />
-            <p className="text-center text-sm text-muted-foreground">
+          <motion.div
+            className="flex flex-col items-center gap-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <Spinner size="medium" className="text-purple-600" />
+            <p className="text-center text-sm text-purple-600 font-medium">
               Loading...
             </p>
-          </div>
+          </motion.div>
         )}
       </CardContent>
     </Card>
