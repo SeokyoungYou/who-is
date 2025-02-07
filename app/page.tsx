@@ -18,25 +18,29 @@ const buttons = [
     label: "Easy",
     type: QuizType.EASY,
     variant: "secondary",
-    className: "w-full bg-purple-100 hover:bg-purple-200 text-purple-800",
+    className:
+      "w-full bg-gradient-to-r from-purple-100 to-purple-200 hover:from-purple-200 hover:to-purple-300 text-purple-800",
   },
   {
     label: "Normal",
     type: QuizType.NORMAL,
     variant: "secondary",
-    className: "w-full bg-purple-400 hover:bg-purple-500 text-white",
+    className:
+      "w-full bg-gradient-to-r from-purple-400 to-purple-500 hover:from-purple-500 hover:to-purple-600 text-white",
   },
   {
     label: "Hard",
     type: QuizType.HARD,
     variant: "secondary",
-    className: "w-full bg-purple-600 hover:bg-purple-700 text-white",
+    className:
+      "w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white",
   },
   {
     label: "Super Hard",
     type: QuizType.SUPER_HARD,
     variant: "secondary",
-    className: "w-full bg-purple-800 hover:bg-purple-900 text-white",
+    className:
+      "w-full bg-gradient-to-r from-purple-800 to-purple-900 hover:from-purple-900 hover:to-purple-950 text-white",
   },
 ];
 
